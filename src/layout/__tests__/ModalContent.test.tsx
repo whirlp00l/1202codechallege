@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
-import { ModalContent } from "./ModalContent";
+import { ModalContent } from "../ModalContent";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
