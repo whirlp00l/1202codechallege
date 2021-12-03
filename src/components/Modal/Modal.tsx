@@ -5,6 +5,7 @@ import { ModalPortal } from "./ModalPortal";
 interface Props {
   toggle: () => void;
   open: boolean;
+  title: string;
 }
 
 const ModalBody: React.FC = ({ children }) => {
@@ -18,10 +19,10 @@ const ModalBody: React.FC = ({ children }) => {
   );
 };
 
-const ModalWrapper: React.FC<{ onClickOutSide: () => void }> = ({
-  children,
-  onClickOutSide,
-}) => {
+const ModalWrapper: React.FC<{
+  onClickOutSide: () => void;
+  modalTitle: string;
+}> = ({ children, onClickOutSide, modalTitle }) => {
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -36,7 +37,7 @@ const ModalWrapper: React.FC<{ onClickOutSide: () => void }> = ({
     <FocusTrap>
       <div
         className="fixed z-10 inset-0 overflow-y-auto"
-        aria-labelledby="modal-title"
+        aria-label={modalTitle}
         role="dialog"
         aria-modal="true"
         onClick={onClickOutSide}
@@ -59,11 +60,11 @@ const ModalWrapper: React.FC<{ onClickOutSide: () => void }> = ({
   );
 };
 
-export const Modal: React.FC<Props> = ({ children, open, toggle }) => {
+export const Modal: React.FC<Props> = ({ children, open, toggle, title }) => {
   return (
     <ModalPortal target={"modal-root"}>
       {open && (
-        <ModalWrapper onClickOutSide={toggle}>
+        <ModalWrapper onClickOutSide={toggle} modalTitle={title}>
           <ModalBody>{children}</ModalBody>
         </ModalWrapper>
       )}

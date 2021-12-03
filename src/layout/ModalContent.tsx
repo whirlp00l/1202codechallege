@@ -10,7 +10,7 @@ const EMAIL_VALIDATOR =
 const API_ENDPOINT =
   "https://l94wc2001h.execute-api.ap-southeast-2.amazonaws.com/prod/fake-auth";
 
-export const ModalContent = () => {
+export const ModalContent: React.FC<{ toggle: () => void }> = ({ toggle }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
@@ -19,7 +19,12 @@ export const ModalContent = () => {
   const [submitting, setSubmitting] = useState(false);
 
   return succeed ? (
-    <h1>Success</h1>
+    <React.Fragment>
+      <h2>Submission Success</h2>
+      <PrimaryButton className="w-full mt-4 mx-auto" onClick={toggle}>
+        Dismiss
+      </PrimaryButton>
+    </React.Fragment>
   ) : (
     <React.Fragment>
       {error && (
@@ -40,7 +45,9 @@ export const ModalContent = () => {
             if (!value) {
               return undefined;
             }
-            return value.length < 3 ? "Please input your full name" : undefined;
+            return value.length < 3
+              ? "Name must be more than 3 letters"
+              : undefined;
           }}
           onChange={(e) => {
             setName(e.target.value);

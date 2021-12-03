@@ -1,6 +1,3 @@
-import { useCallback } from "react";
-import debounce from "lodash.debounce";
-
 interface TextInputProps {
   id: string;
   label: string;
@@ -18,10 +15,9 @@ export const TextInput: React.FC<TextInputProps> = ({
   onChange,
 }) => {
   const error = validator(value);
-  const debouncedChangeHandler = useCallback(debounce(onChange, 500), []);
 
   return (
-    <div className="">
+    <div className="min-w-full">
       {label && (
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -35,9 +31,12 @@ export const TextInput: React.FC<TextInputProps> = ({
         id={id}
         type="text"
         placeholder={placeholder}
-        onChange={debouncedChangeHandler}
+        onChange={onChange}
+        value={value}
       ></input>
-      {error && <p className="text-red-500 text-xs italic pt-1">{error}</p>}
+      {error && (
+        <p className="text-red-500 text-xs italic pt-1 break-normal">{error}</p>
+      )}
     </div>
   );
 };
